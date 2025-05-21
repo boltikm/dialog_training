@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Диалог с клиентом</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 2em; }
+  .score { font-weight: bold; margin-top: 2em; }
+</style>
+<script>
+let score = 0;
+function goTo(id) {
+  document.querySelectorAll('.scene').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+function answer(correct, nextId) {
+  if (correct) score++;
+  goTo(nextId);
+  if (nextId === 'result') {
+    document.getElementById('final-score').innerText = `Вы дали ${score} из 2 правильных ответов.`;
+  }
+}
+</script>
+</head>
+<body onload="goTo('scene1')">
+
+<div id="scene1" class="scene" style="display:none">
+  <p><strong>Клиент:</strong> Здравствуйте! Я ищу наушники.</p>
+  <button onclick="answer(true, 'scene2')">Конечно, могу вам показать несколько моделей.</button><br><br>
+  <button onclick="answer(false, 'scene2')">Сами посмотрите, они вон там.</button>
+</div>
+
+<div id="scene2" class="scene" style="display:none">
+  <p><strong>Клиент:</strong> Есть ли беспроводные модели?</p>
+  <button onclick="answer(true, 'result')">Да, вот здесь беспроводные — с Bluetooth.</button><br><br>
+  <button onclick="answer(false, 'result')">А вы не можете сами посмотреть?</button>
+</div>
+
+<div id="result" class="scene" style="display:none">
+  <p class="score" id="final-score"></p>
+  <p>Спасибо за прохождение тренажёра!</p>
+</div>
+
+</body>
+</html>
